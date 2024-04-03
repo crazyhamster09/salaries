@@ -65,6 +65,7 @@ st.write(
   """
 )
 def select_salaries():
+    df_1, df_2 = load_salaries()  
     df_1 = df_1.loc[[26, 43, 54]]
     df_1 = df_1.T
     df_1 = df_1.drop("Среднемесячная начисленная заработная плата по видам экономической деятельности")
@@ -82,7 +83,7 @@ def select_salaries():
     df = pd.concat([df_2, df_1])
     return df
 
-df = select_salaries(df_1, df_2)
+df = select_salaries()
 st.dataframe(df)
 
 st.write(
