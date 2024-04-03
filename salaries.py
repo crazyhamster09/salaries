@@ -239,7 +239,7 @@ st.dataframe(dfd)
 def fig4():
     dfd = load_VVP()
     fig4, ax4 = plt.subplots()
-    fig4 = sns.heatmap(dfd[['Реальная зп Пр-во кокса и нефтепродуктов', 'Реальная зп Строительство', 'Реальная зп Образование','ВВП', 'Безработица']].corr(), ax4, annot=True)
+    sns.heatmap(dfd[['Реальная зп Пр-во кокса и нефтепродуктов', 'Реальная зп Строительство', 'Реальная зп Образование','ВВП', 'Безработица']].corr(), ax4, annot=True)
     return fig4, ax4
 fig4 = fig4()
 st.pyplot(fig4)
