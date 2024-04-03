@@ -82,7 +82,7 @@ def select_salaries():
     df = pd.concat([df_2, df_1])
     return df
 
-df = select_salaries()
+df = select_salaries(df_1, df_2)
 st.dataframe(df)
 
 st.write(
