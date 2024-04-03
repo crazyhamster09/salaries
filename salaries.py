@@ -10,7 +10,7 @@ Original file is located at
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-import plotly.express as px
+import seaborn as sns
 
 st.write(
         """
@@ -202,8 +202,42 @@ def fig2():
     return fig2, ax2
 
 fig2, ax2 = fig2()
+
 st.pyplot(fig2)
 
 st.write(
          """Прирост реальных зп чаще всего превышает процент инфляции, за исключением кризисных периодов (2009 год в строительстве, 2010 год в образовании, 2014 год в строительстве и образовании, 2015 год по всем отраслям, с 2018 по 2022 год в производстве кокса и нефтепродуктов, 2020 год в образовании, 2021 год в строительстве). Ситуации, когда темпы роста зарплат не догоняют инфляцию, связаны с экономическими кризисами или являются реакцией на негативные обстоятельства (например, пандемию в 2020 году для образования и строительства, при этом снижение цен на нефтепродукты в 2018 году привело к снижению как реальных, так и номинальных зп в отрасли)."""
          )
+st.write(
+    """
+    #Дополнительные данные
+    В качестве дополнительных данных взяты показатели ВВП и уровня безработицы (Росстат).
+    """
+    )
+def load_VVP:
+    excel_reader = pd.ExcelFile('VVP_god_s_1995.xlsx')
+    VVP_1 = excel_reader.parse('1')
+    VVP_2 = excel_reader.parse('2')
+    VVP_1 = VVP_1.rename(columns={'Unnamed: 5': '2000', 'Unnamed: 6': '2001', 'Unnamed: 7': '2002', 'Unnamed: 8': '2003',  'Unnamed: 9': '2004', 'Unnamed: 10': '2005', 'Unnamed: 11': '2006', 'Unnamed: 12': '2007', 'Unnamed: 13': '2008', 'Unnamed: 14': '2009', 'Unnamed: 15': '2010', 'Unnamed: 16': '2011'})
+    VVP_1 = VVP_1.loc[2]
+    VVP_1 = VVP_1.T
+    VVP_1 = VVP_1.iloc[5:17]
+    VVP_2 = VVP_2.rename({'Unnamed: 1': '2012', 'Unnamed: 2': '2013', 'Unnamed: 3': '2014', 'Unnamed: 4': '2015',  'Unnamed: 5': '2016', 'Unnamed: 6': '2017', 'Unnamed: 7': '2018', 'Unnamed: 8': '2019', 'Unnamed: 9': '2020', 'Unnamed: 10': '2021', 'Unnamed: 11': '2022', 'Unnamed: 12': '2023'})
+    VVP_2 = VVP_2.iloc[3]
+    VVP_2 = VVP_2.T
+    VVP_2 = VVP_2.iloc[1:13]
+    VVP = pd.concat([VVP_1, VVP_2])
+    VVP = VVP.astype(float)
+    VVP = pd.DataFrame(VVP)
+    VVP = VVP.rename(columns={0:'ВВП'})
+    dfi = count_real_salaries()
+    dfd = dfi.join(VVP)
+    dfd['Безработица'] = [9.8, 8.8, 8.5, 7.8, 7.9, 7.1, 6.7, 5.7, 7.0, 8.4, 7.5, 6.5, 5.5, 5.5, 5.2, 5.5, 5.5, 5.2, 4.8, 4.6, 4.8, 4.8, 3.9, 4.2]
+    return dfd
+st.dataframe(dfd)
+def fig4():
+    dfd = load_VVP()
+    fig4 = sns.heatmap(dfd[['Реальная зп Пр-во кокса и нефтепродуктов', 'Реальная зп Строительство', 'Реальная зп Образование','ВВП', 'Безработица']].corr(), annot=True)
+    return fig4
+st.pyplot(fig4)
+st.write("""ВВП полностью коррелирует с зарплатами в строительстве. Корреляция зарплат в строительстве и образовании составляет 0.99. Между безработицей и остальными показателями наблюдается обратная корреляция.""")
