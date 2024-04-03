@@ -234,6 +234,7 @@ def load_VVP():
     dfd = dfi.join(VVP)
     dfd['Безработица'] = [9.8, 8.8, 8.5, 7.8, 7.9, 7.1, 6.7, 5.7, 7.0, 8.4, 7.5, 6.5, 5.5, 5.5, 5.2, 5.5, 5.5, 5.2, 4.8, 4.6, 4.8, 4.8, 3.9, 4.2]
     return dfd
+dfd = load_VVP()
 st.dataframe(dfd)
 def fig4():
     dfd = load_VVP()
