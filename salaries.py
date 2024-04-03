@@ -214,7 +214,7 @@ st.write(
     В качестве дополнительных данных взяты показатели ВВП и уровня безработицы (Росстат).
     """
     )
-def load_VVP:
+def load_VVP():
     excel_reader = pd.ExcelFile('VVP_god_s_1995.xlsx')
     VVP_1 = excel_reader.parse('1')
     VVP_2 = excel_reader.parse('2')
