@@ -236,6 +236,7 @@ def load_VVP():
     return dfd
 dfd = load_VVP()
 st.dataframe(dfd)
+st.write("Выявим корреляцию между реальными зарплатами и показателями ВВП и уровня безработицы.")
 def fig4():
     dfd = load_VVP()
     fig4, ax4 = plt.subplots()
